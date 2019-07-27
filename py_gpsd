@@ -5,12 +5,12 @@
 from gps import *
 import time
 
-gpsd = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
+gps_inst = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
 
 vdop = alt = sat_count = epv = gtime = 0
 
 while True:
-	report = gpsd.next()
+	report = gps_inst.next()
 	# print report	# for debugging
 	if report['class'] == 'SKY':
 		sat_count = 0
