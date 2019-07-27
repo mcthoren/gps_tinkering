@@ -1,0 +1,1 @@
+USB GPS receivers are becoming cheap enough to stick on a raspberry pi and screw with just for fun. So that's what this code is about. more specifically, for ham radio antenna reasons, i'm interested in a reasonably accurate measure of my elevation. so for a start i'm going to collect those statistics, plot the long term averages, and see if they tell me anything.
