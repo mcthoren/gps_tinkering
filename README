@@ -8,3 +8,5 @@ running:
 
 should get one off to a good start.
 
+a description of the fields returned by gpsd can be found here:
+	https://gpsd.gitlab.io/gpsd/gpsd_json.html
