@@ -5,27 +5,22 @@ import time
 
 gpsd = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
 
-vdop = alt = sat_count = epv = 0
+vdop = alt = sat_count = epv = gtime = 0
 
-try:
-	while True:
-		report = gpsd.next()
-		# print report
-		if report['class'] == 'SKY':
-			sat_count = 0
-			for i in report['satellites']:
-				if i['used']:
-					sat_count += 1
-			vdop = getattr(report,'vdop','0.0')
-		if report['class'] == 'TPV':
-			alt = getattr(report,'alt','0.0')
-			epv = getattr(report,'epv','0.0')
-			time = getattr(report,'time','0.0')
+while True:
+	report = gpsd.next()
+	# print report	# for debugging
+	if report['class'] == 'SKY':
+		sat_count = 0
+		for i in report['satellites']:
+			if i['used']:
+				sat_count += 1
+		vdop = getattr(report,'vdop','0.0')
+	if report['class'] == 'TPV':
+		alt = getattr(report,'alt','0.0')
+		epv = getattr(report,'epv','0.0')
+		gtime = getattr(report,'time','0.0')
 
-		print "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (time, alt, epv, vdop, sat_count) 
-
+	print "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (gtime, alt, epv, vdop, sat_count)
 
 	time.sleep(1)
-
-except (KeyboardInterrupt, SystemExit):
-	print "Ctrl + C"
