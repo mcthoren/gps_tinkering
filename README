@@ -2,7 +2,9 @@ USB GPS receivers are becoming cheap enough to stick on a raspberry pi and screw
 
 more specifically, for ham radio antenna reasons, i'm interested in a reasonably accurate measure of my elevation. so for a start i'm going to collect those statistics, plot the long term averages, and see if they tell me anything.
 
-this code uses the gpsd tools, and python client libraries.
+this code uses the gpsd tools, and python client libraries, and started from an example here:
+	http://ozzmaker.com/using-python-with-a-gps-receiver-on-a-raspberry-pi/
+
 running:
 	apt-get install python-gps gpsd-clients
 
