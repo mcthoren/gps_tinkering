@@ -1,4 +1,6 @@
-#! /usr/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# this code indented with actual 0x09 tabs
 
 from gps import *
 import time
