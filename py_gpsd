@@ -8,6 +8,7 @@ import time
 gps_inst = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
 
 vdop = alt = sat_count = epv = gtime = gmode = 0
+alt_lst = []
 
 while True:
 	report = gps_inst.next()
@@ -26,5 +27,12 @@ while True:
 
 	if gmode == 3 and sat_count != 0:
 		print "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (gtime, alt, epv, vdop, sat_count)
+		alt_lst.append((alt, epv))
+		avg_alt = sum(a[0] for a in alt_lst) / len(alt_lst)
+		print "avg alt: %.1f" % avg_alt
+
+	print "len: %d" % len(alt_lst)
+	if len(alt_lst) > 1024:
+		alt_list.remove(alt_lst[0])
 
 	time.sleep(1)
