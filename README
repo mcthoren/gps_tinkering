@@ -6,7 +6,7 @@ this code uses the gpsd tools, and python client libraries, and started from an 
 	http://ozzmaker.com/using-python-with-a-gps-receiver-on-a-raspberry-pi/
 
 running:
-	apt-get install python-gps gpsd-clients
+	apt-get install python-gps gpsd-clients python-numpy python-matplotlib
 
 should get one off to a good start.
 
