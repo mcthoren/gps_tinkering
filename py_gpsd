@@ -7,7 +7,7 @@ import time
 
 gps_inst = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
 
-vdop = alt = sat_count = epv = gtime = 0
+vdop = alt = sat_count = epv = gtime = gmode = 0
 
 while True:
 	report = gps_inst.next()
@@ -17,12 +17,14 @@ while True:
 		for i in report['satellites']:
 			if i['used']:
 				sat_count += 1
-		vdop = getattr(report,'vdop','0.0')
+		vdop = getattr(report, 'vdop', '0.0')
 	if report['class'] == 'TPV':
-		alt = getattr(report,'alt','0.0')
-		epv = getattr(report,'epv','0.0')
-		gtime = getattr(report,'time','0.0')
+		alt = getattr(report, 'alt', '0.0')
+		epv = getattr(report, 'epv', '0.0')
+		gtime = getattr(report, 'time', '0.0')
+		gmode = getattr(report, 'mode', '0.0')
 
-	print "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (gtime, alt, epv, vdop, sat_count)
+	if gmode == 3 and sat_count != 0:
+		print "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (gtime, alt, epv, vdop, sat_count)
 
 	time.sleep(1)
