@@ -34,5 +34,3 @@ while True:
 	print "len: %d" % len(alt_lst)
 	if len(alt_lst) > 1024:
 		alt_list.remove(alt_lst[0])
-
-	time.sleep(1)
