@@ -41,8 +41,10 @@ while True:
 			alt_lst.append((alt, epv))
 
 		lst_len = len(alt_lst)
-		avg_alt = sum(a[0] for a in alt_lst) / lst_len
-		avg_evp = sum(a[1] for a in alt_lst) / lst_len
+		if (lst_len > 0):
+			avg_alt = sum(a[0] for a in alt_lst) / lst_len
+			avg_evp = sum(a[1] for a in alt_lst) / lst_len
+
 		print "avg alt: %.1fm, avg evp: %.1fm" % (avg_alt, avg_evp)
 
 	print "len: %d" % len(alt_lst)
