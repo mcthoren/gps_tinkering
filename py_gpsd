@@ -28,8 +28,10 @@ while True:
 	if gmode == 3 and sat_count != 0:
 		print "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (gtime, alt, epv, vdop, sat_count)
 		alt_lst.append((alt, epv))
-		avg_alt = sum(a[0] for a in alt_lst) / len(alt_lst)
-		print "avg alt: %.1f" % avg_alt
+		lst_len = len(alt_lst)
+		avg_alt = sum(a[0] for a in alt_lst) / lst_len
+		avg_evp = sum(a[1] for a in alt_lst) / lst_len
+		print "avg alt: %.1f, avg evp: %.1f" % (avg_alt, avg_evp)
 
 	print "len: %d" % len(alt_lst)
 	if len(alt_lst) > 1024:
