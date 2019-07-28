@@ -69,7 +69,7 @@ while True:
 	if (gmode == 3 and sat_count != 0):
 		print "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (gtime, alt, epv, vdop, sat_count)
 
-		if (vdop < 2.0): # ignore lower quality data
+		if (vdop < 2.5 and isinstance(alt, float) and isinstance(epv, float)): # ignore lower quality data, strings
 			alt_lst.append((alt, epv))
 
 		lst_len = len(alt_lst)
