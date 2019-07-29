@@ -1,0 +1,7 @@
+#!/usr/bin/zsh
+
+# meant to be run from a cron job such like:
+# minute hour    mday    month   wday    command
+# 59      23      *       *       *       ~/projects/gps/gen_day_avg
+
+echo "$(date +%Y%m%d) $(cat ~/projects/gps/data/$(date +%Y)/gps_alt.dat.$(date +%Y%m%d) | awk '{print $1, $4}' | ~/projects/gps/day_avg)" >> ~/projects/gps/data/$(date +%Y)/gps_alt.day.avg.$(date +%Y%m)
