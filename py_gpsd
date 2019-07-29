@@ -55,10 +55,7 @@ while True:
 	report = gps_inst.next()
 	# print report	# for debugging
 	if (report['class'] == 'SKY'):
-		sat_count = 0
-		for i in report['satellites']:
-			if i['used']:
-				sat_count += 1
+		sat_count = sum(i['used'] for i in report['satellites'])
 		vdop = getattr(report, 'vdop', '0.0')
 
 	if (report['class'] == 'TPV'):
