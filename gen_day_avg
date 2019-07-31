@@ -1,7 +1,39 @@
-#!/usr/bin/zsh
+#!/usr/bin/perl
+use strict;
+use warnings;
+use POSIX qw(strftime);
 
+# runs thru my gps altitude data files, and spits out daily averages.
 # meant to be run from a cron job such like:
-# minute hour    mday    month   wday    command
-# 59      23      *       *       *       ~/projects/gps/gen_day_avg
+# min	hour	mday	month	wday	command
+# 59	23	*	*	*	~/projects/gps/gen_day_avg
 
-echo "$(date +%Y%m%d) $(cat ~/projects/gps/data/$(date +%Y)/gps_alt.dat.$(date +%Y%m%d) | awk '{print $1, $4}' | ~/projects/gps/day_avg)" >> ~/projects/gps/data/$(date +%Y)/gps_alt.day.avg.$(date +%Y%m)
+my $num = 0;
+my $asum = 0;
+my $esum = 0;
+
+my $ydate = strftime "%Y", localtime;
+my $mdate = strftime "%Y%m", localtime;
+my $ddate = strftime "%Y%m%d", localtime;
+
+my $in_dat_f = "/import/home/ghz/projects/gps/data/$ydate/gps_alt.dat.$ddate";
+my $out_dat_f = "/import/home/ghz/projects/gps/data/$ydate/gps_alt.day.avg.$mdate";
+
+open(IN, "<", $in_dat_f) or die "omg! can't open input file: $in_dat_f";
+
+unless (open(OUT, ">>", $out_dat_f)) {
+	close(IN);
+	die "omg! can't open output file: $out_dat_f";
+}
+
+while(<IN>){
+	chomp;
+	my ($x, $a, $b, $y, $c, $d, $e, $z, $f) = split;
+	$num++;
+	$asum+=$y;
+	$esum+=$z;
+}
+
+printf OUT "%s\t%.1f m\t%.1f m\n", $ddate, $asum / $num, $esum / $num;
+close(IN);
+close(OUT);
