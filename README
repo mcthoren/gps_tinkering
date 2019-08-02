@@ -6,9 +6,14 @@ this code uses the gpsd tools, and python client libraries, and started from an 
 	http://ozzmaker.com/using-python-with-a-gps-receiver-on-a-raspberry-pi/
 
 running:
-	apt-get install python-gps gpsd-clients python-numpy python-matplotlib
+	apt-get install python-gps gpsd-clients python-numpy python-matplotlib gnuplot
 
 should get one off to a good start.
 
 a description of the fields returned by gpsd can be found here:
 	https://gpsd.gitlab.io/gpsd/gpsd_json.html
+
+# i've added the following entries to my crontab to further lazify my life:
+#minute	hour	mday	month	wday	command
+59	23	*	*	*	/import/home/ghz/projects/gps/gen_day_avg
+02	00	*	*	*	/import/home/ghz/projects/gps/plot_month_avg
