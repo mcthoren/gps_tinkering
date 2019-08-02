@@ -1,0 +1,9 @@
+#!/bin/sh
+
+HOME="/import/home/ghz"
+GPSP="$HOME/projects/gps"
+GPS_ALT_TEMP="$(mktemp /tmp/gps_alt.XXXXXXXXXXXXX)"
+
+cat $GPSP/data/*/gps_alt.day.avg.* > "$GPS_ALT_TEMP"
+gnuplot -e "ALTF='$GPS_ALT_TEMP'" "$GPSP/gps.gnuplot"
+rm "${GPS_ALT_TEMP}"
