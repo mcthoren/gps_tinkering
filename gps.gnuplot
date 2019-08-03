@@ -13,7 +13,7 @@ set xtics 172800
 set mxtics 2
 set title "Daily Averages of Running Height Averages"
 # set xlabel "Daily Average Elevation Measurement" offset 0.0, -1.0
-set format x "%Y-%m-%d"
+set format x "%F"
 set output '/import/home/ghz/projects/gps/plots/avg_el_m.png'
 plot ALTF using 1:2 t 'Average Elevation Reading (m)' with boxes linecolor rgb "#ff0000"
 set output '/import/home/ghz/projects/gps/plots/avg_el_m_yerr.png'
