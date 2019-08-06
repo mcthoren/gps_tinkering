@@ -3,7 +3,7 @@
 # this code indented with actual 0x09 tabs
 
 from gps import *
-import sys, time, datetime, fileinput
+import sys, time, datetime, fileinput, os
 import numpy as np
 import matplotlib.dates as mdates
 
@@ -66,7 +66,7 @@ while True:
 
 	if (gmode == 3 and sat_count != 0):
 		# debug
-		print "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (gtime, alt, epv, vdop, sat_count)
+		# print "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (gtime, alt, epv, vdop, sat_count)
 
 		if (vdop < 2.5 and isinstance(alt, float) and isinstance(epv, float)): # ignore lower quality data, strings
 			alt_lst.append((alt, epv))
@@ -81,6 +81,8 @@ while True:
 		dat_string = "%s\tavg alt: %.1f m\tavg evp: %.1f m\n" % (ts, avg_alt, avg_evp)
 		wx.write_out_dat_stamp(ts, dat_fname, dat_string, wx_dir)
 		plot(ts, dat_fname)
+		# wx6_sync defined in ~/.ssh/config with host, user, key, etc.
+		os.system('/usr/bin/rsync --timeout=60 -ur ' + wx_dir + '/* wx6_sync:/wx6/')
 		time0 = time1 = time.time()
 
 	if (len(alt_lst) > 1024):
