@@ -5,7 +5,6 @@ more specifically, for ham radio antenna reasons, i'm interested in a reasonably
 this code uses the gpsd tools, and python client libraries, and started from an example here:
 	http://ozzmaker.com/using-python-with-a-gps-receiver-on-a-raspberry-pi/
 
-
 at the moment, this code collects 1024 points of elevation data with a not terrible vdop, and computes a running average over it. once a minute this running average is written out to disk and graphed. once a day those running averages are averaged into two bar graphs, one with and one w.o. average expected vertical precision.
 
 running:
@@ -20,3 +19,7 @@ a description of the fields returned by gpsd can be found here:
 #minute	hour	mday	month	wday	command
 59	23	*	*	*	/import/home/ghz/projects/gps/gen_day_avg
 02	00	*	*	*	/import/home/ghz/projects/gps/plot_month_avg
+
+this code can be found at the following places:
+	https://github.com/mcthoren/gps_tinkering
+	https://wx6.slackology.net/
