@@ -5,8 +5,8 @@ set xlabel "Date (UTC)"
 set xdata time
 set timefmt "%Y%m%d"
 set grid
-set ylabel "m"
-set y2label "m"
+set ylabel "Altitude (m)"
+set y2label "Altitude (m)"
 set term png size 2000, 512 font ",10"
 set grid nomxtics
 set xtics 172800
