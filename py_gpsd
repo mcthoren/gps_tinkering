@@ -48,7 +48,7 @@ def plot(ts, n_plate):
 	f_pts  = date.size - npoints
 	t_pts  = date.size
 
-	wx.graph(date[f_pts : t_pts], alt_averages[f_pts : t_pts], "b-", "Average Elevation", u"Elevation (m)", plot_d+'avg_alt.png')
+	wx.graph(date[f_pts : t_pts], alt_averages[f_pts : t_pts], "b-", "Average Elevation", u"Elevation (meters)", plot_d+'avg_alt.png')
 
 time0 = time1 = time.time()
 while True:
