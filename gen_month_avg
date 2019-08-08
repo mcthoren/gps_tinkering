@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use POSIX qw(strftime);
+
+# runs thru my gps altitude data files, and spits out monthly averages.
+# meant to be run from a cron job such like:
+# min	hour	mday	month	wday	command
+# 01	00	1	*	*	~/projects/gps/gen_month_avg
+
+my $num = 0;
+my $asum = 0;
+my $esum = 0;
+
+my $date = time;
+my $datey = $date - 86400;	# a day ago, in seconds (60 * 60 * 24).
+my $ydatey = strftime "%Y", localtime($datey);
+my $mdatey = strftime "%Y%m", localtime($datey);
+
+my $in_dat_f = "/import/home/ghz/projects/gps/data/$ydatey/gps_alt.day.avg.$mdatey";
+my $out_dat_f = "/import/home/ghz/projects/gps/data/gps_alt_monthly_averages";
+
+open(IN, "<", $in_dat_f) or die "omg! can't open input file: $in_dat_f";
+
+unless (open(OUT, ">>", $out_dat_f)) {
+	close(IN);
+	die "omg! can't open output file: $out_dat_f";
+}
+
+while(<IN>){
+	chomp;
+	my ($x, $y, $a, $z, $b) = split;
+	$num++;
+	$asum+=$y;
+	$esum+=$z;
+}
+
+printf OUT "%s\t%.1f m\t%.1f m\n", $mdatey, $asum / $num, $esum / $num;
+close(IN);
+close(OUT);
