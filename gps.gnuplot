@@ -1,4 +1,3 @@
-set xtics
 set y2tics
 set key outside below
 set xlabel "Date (UTC)"
@@ -9,7 +8,7 @@ set ylabel "Elevation (meters)"
 set y2label "Elevation (meters)"
 set term png size 2000, 512 font ",10"
 set grid nomxtics
-set xtics 172800
+set xtics auto
 set mxtics 2
 set title "Daily Averages of Running Averages of GPS Elevation Measurments"
 set format x "%F"
