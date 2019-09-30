@@ -2,8 +2,9 @@
 
 HOME="/import/home/ghz"
 GPSP="$HOME/projects/gps"
+GPS_MA="$GPSP/data/gps_alt_monthly_averages"
 GPS_ALT_TEMP="$(mktemp /tmp/gps_alt.XXXXXXXXXXXXX)"
 
 cat $GPSP/data/*/gps_alt.day.avg.* > "$GPS_ALT_TEMP"
-gnuplot -e "ALTF='$GPS_ALT_TEMP'" "$GPSP/gps.gnuplot"
+gnuplot -e "ALTF='$GPS_ALT_TEMP';ALTF_MA='$GPS_MA'" "$GPSP/gps.gnuplot"
 rm "${GPS_ALT_TEMP}"
