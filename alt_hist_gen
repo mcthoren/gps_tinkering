@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 my %el_hash;
+my $elev;
 
 while(<>){
 	chomp;
@@ -10,4 +11,6 @@ while(<>){
 	$el_hash{$z}++;
 }
 
-# printf "%s\t%.1f m\t%.1f m\n", $asum / $num, $esum / $num;
+foreach $elev (sort keys %el_hash) {
+	printf "%.1f m\t%d\n", $elev, $el_hash{$elev};
+}
