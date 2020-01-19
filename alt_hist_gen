@@ -1,0 +1,13 @@
+#!/usr/bin/perl -T
+use strict;
+use warnings;
+
+my %el_hash;
+
+while(<>){
+	chomp;
+	my ($x, $y, $a, $z, $b) = split;
+	$el_hash{$z}++;
+}
+
+# printf "%s\t%.1f m\t%.1f m\n", $asum / $num, $esum / $num;
