@@ -8,6 +8,6 @@ set xtics auto
 set mxtics 
 set grid mxtics
 
-set title "Elevation Frequency Histogram for All Measurements."
+set title "Elevation Frequency Histogram for All Measurements"
 set output '/import/home/ghz/projects/gps/plots/el_hist.png'
 plot ALT_HIST using 1:3 t 'Elevation (meters)' with boxes linecolor rgb "#ff0000"
