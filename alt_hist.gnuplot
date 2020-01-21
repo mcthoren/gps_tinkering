@@ -12,11 +12,14 @@ set title "Elevation Frequency Histogram for All Measurements"
 set output '/import/home/ghz/projects/gps/plots/el_hist.png'
 plot ALT_HIST using 1:3 t 'Elevation (meters)' with boxes linecolor rgb "#ff0000"
 
+set title "Elevation Frequency Histogram for All Measurements ≥ 450m < 600m"
 set output '/import/home/ghz/projects/gps/plots/el_hist.450-600.png'
 plot AH_456 using 1:3 t 'Elevation (meters)' with boxes linecolor rgb "#ff0000"
 
+set title "Elevation Frequency Histogram for All Measurements ≥ 500m < 550m"
 set output '/import/home/ghz/projects/gps/plots/el_hist.500-550.png'
 plot AH_550 using 1:3 t 'Elevation (meters)' with boxes linecolor rgb "#ff0000"
 
+set title "Elevation Frequency Histogram for All Measurements ≥ 520m < 530m"
 set output '/import/home/ghz/projects/gps/plots/el_hist.520-530.png'
 plot AH_523 using 1:3 t 'Elevation (meters)' with boxes linecolor rgb "#ff0000"
