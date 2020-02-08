@@ -5,7 +5,7 @@ use warnings;
 my %el_hash;
 my $elev;
 
-while(<>){
+while (<>) {
 	chomp;
 	my ($x, $y, $a, $z, $b) = split;
 	$el_hash{$z}++;

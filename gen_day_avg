@@ -1,4 +1,5 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -T
+
 use strict;
 use warnings;
 use POSIX qw(strftime);
@@ -26,7 +27,7 @@ unless (open(OUT, ">>", $out_dat_f)) {
 	die "omg! can't open output file: $out_dat_f";
 }
 
-while(<IN>){
+while (<IN>) {
 	chomp;
 	my ($x, $a, $b, $y, $c, $d, $e, $z, $f) = split;
 	$num++;
