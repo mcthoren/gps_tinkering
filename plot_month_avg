@@ -3,6 +3,7 @@
 HOME="/import/home/ghz"
 GPSP="$HOME/projects/gps"
 GPS_MA="$GPSP/data/gps_alt_monthly_averages"
+PAT0="^2([0-9]{13})\tavg alt: [0-9]{3}.[0-9] m\tavg evp: [0-9]{1,3}.[0-9] m$"
 
 GPS_ALT_TEMP_0="$(mktemp /tmp/gps_alt.XXXXXXXXXXXXX)"
 GPS_ALT_TEMP_1="$(mktemp /tmp/gps_alt.XXXXXXXXXXXXX)"
@@ -15,7 +16,7 @@ cat $GPSP/data/*/gps_alt.day.avg.* > "$GPS_ALT_TEMP_0"
 gnuplot -e "ALTF='$GPS_ALT_TEMP_0';ALTF_MA='$GPS_MA'" "$GPSP/gps.gnuplot"
 rm "${GPS_ALT_TEMP_0}"
 
-cat $GPSP/data/*/gps_alt.dat.* > "$GPS_ALT_TEMP_1"
+cat $GPSP/data/*/gps_alt.dat.* | grep -aP "$PAT0" > "$GPS_ALT_TEMP_1"
 gnuplot -e "BOXF='$GPS_ALT_TEMP_1'" "$GPSP/boxplot.gnuplot"
 
 $GPSP/alt_hist_gen "$GPS_ALT_TEMP_1" > "$GPS_ALT_TEMP_HIST"
