@@ -7,8 +7,8 @@ my $elev;
 
 while (<>) {
 	chomp;
-	my ($x, $y, $a, $z, $b) = split;
-	$el_hash{$z}++;
+	my ($x, $y, $a, $alt, $b) = split;
+	$el_hash{$alt}++ if ($alt > 300 && $alt < 900);
 }
 
 foreach $elev (sort keys %el_hash) {
