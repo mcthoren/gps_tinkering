@@ -17,7 +17,7 @@ gnuplot -e "ALTF='$GPS_ALT_TEMP_0';ALTF_MA='$GPS_MA'" "$GPSP/gps.gnuplot"
 rm "${GPS_ALT_TEMP_0}"
 
 cat $GPSP/data/*/gps_alt.dat.* | grep -aP "$PAT0" > "$GPS_ALT_TEMP_1"
-gnuplot -e "BOXF='$GPS_ALT_TEMP_1'" "$GPSP/boxplot.gnuplot"
+gnuplot -e "BOXF='$GPS_ALT_TEMP_1'" "$GPSP/boxplot.gnuplot" 2> "$GPSP/data/gps_alt_stats"
 
 $GPSP/alt_hist_gen "$GPS_ALT_TEMP_1" > "$GPS_ALT_TEMP_HIST"
 egrep "^4[56789][0-9]\.[0-9]|^5[0-9]{2}\.[0-9]" "$GPS_ALT_TEMP_HIST" > "${GATH456}"

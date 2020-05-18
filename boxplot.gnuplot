@@ -1,3 +1,4 @@
+stats BOXF u 4
 set term png size 800, 2000 font ",10"
 
 set style fill solid 0.5 border -1
