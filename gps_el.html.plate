@@ -10,6 +10,14 @@
 <body>
 <center>
 <br><h2>Averaged Elevation Readings from a USB GPS Dongle in Augsburg, Germany</h2>
+<br>
+<table borders>
+<tr><td>Number of Data Points: </td> <td>AAAAA</td></tr>
+<tr><td>Mean Elevation: </td> <td>MMMMM m</td></tr>
+<tr><td>Median Elevation: </td> <td>DDDDD m</td></tr>
+<tr><td>Stats Generated:</td>  <td>TTTTT</td></tr>
+</table>
+<br>
 See <a href="https://github.com/mcthoren/gps_tinkering">here</a> for more info.<br>
 <br> Current Conditions (updates every ~60s):
 <br>
