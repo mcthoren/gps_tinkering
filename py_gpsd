@@ -37,7 +37,7 @@ def plot(ts, n_plate):
 		wx.proof_dat_f(dat_f[3 - i])
 
 	dat = fileinput.input(dat_f)
-	date, alt_averages, evp_averages = np.loadtxt(dat, usecols=(0, 3, 7), unpack=True, converters={ 0: mdates.strpdate2num('%Y%m%d%H%M%S')})
+	date, alt_averages, evp_averages = np.loadtxt(dat, usecols=(0, 3, 7), unpack=True, encoding = u'utf8', converters={ 0: mdates.strpdate2num('%Y%m%d%H%M%S')})
 
 	if date.size < 4:
 		return 0; # not enough points yet. wait for more
@@ -48,12 +48,14 @@ def plot(ts, n_plate):
 	f_pts  = date.size - npoints
 	t_pts  = date.size
 
-	wx.graph(date[f_pts : t_pts], alt_averages[f_pts : t_pts], "b-", "Running Average Elevation", u"Elevation (meters)", plot_d+'avg_alt.png')
+	wx.graph(date[f_pts : t_pts], alt_averages[f_pts : t_pts], u"b-", u"Running Average Elevation", u"Elevation (meters)", plot_d+'avg_alt.png')
 
+debug = 0
 time0 = time1 = time.time()
 while True:
 	report = gps_inst.next()
-	# print report	# for debugging
+	if debug:
+		print(report)
 	if (report['class'] == 'SKY'):
 		sat_count = sum(i['used'] for i in report['satellites'])
 		vdop = getattr(report, 'vdop', '0.0')
@@ -65,8 +67,9 @@ while True:
 		gmode = getattr(report, 'mode', '0.0')
 
 	if (gmode == 3 and sat_count != 0):
-		# debug
-		# print "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (gtime, alt, epv, vdop, sat_count)
+		if debug:
+			dbg_str0 = "time: %s\talt: %sm\tepv: %sm\tvdop: %s\tsat_count: %s" % (gtime, alt, epv, vdop, sat_count)
+			print(dbg_str0)
 
 		if (vdop < 2.5 and isinstance(alt, float) and isinstance(epv, float)): # ignore lower quality data, strings
 			alt_lst.append((alt, epv))
@@ -78,7 +81,7 @@ while True:
 		if (lst_len > 0):
 			avg_alt = sum(a[0] for a in alt_lst) / lst_len
 			avg_evp = sum(a[1] for a in alt_lst) / lst_len
-		dat_string = "%s\tavg alt: %.1f m\tavg evp: %.1f m\n" % (ts, avg_alt, avg_evp)
+		dat_string = u"%s\tavg alt: %.1f m\tavg evp: %.1f m\n" % (ts, avg_alt, avg_evp)
 		wx.write_out_dat_stamp(ts, dat_fname, dat_string, wx_dir)
 		plot(ts, dat_fname)
 		# wx6_sync defined in ~/.ssh/config with host, user, key, etc.
