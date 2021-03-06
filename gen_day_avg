@@ -2,12 +2,17 @@
 
 use strict;
 use warnings;
+use utf8;
+use open qw(:std :utf8);
+use Encode qw(encode decode);
 use POSIX qw(strftime);
 
 # runs thru my gps altitude data files, and spits out daily averages.
 # meant to be run from a cron job such like:
 # min	hour	mday	month	wday	command
 # 59	23	*	*	*	~/projects/gps/gen_day_avg
+
+@ARGV = map { decode("UTF-8", $_) } @ARGV;
 
 my $num = 0;
 my $asum = 0;
