@@ -1,6 +1,12 @@
 #!/usr/bin/perl -T
+
 use strict;
 use warnings;
+use utf8;
+use open qw(:std :utf8);
+use Encode qw(encode decode);
+
+@ARGV = map { decode("UTF-8", $_) } @ARGV;
 
 my %el_hash;
 my $elev;
