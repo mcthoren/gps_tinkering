@@ -1,4 +1,5 @@
 set y2tics
+set mytics
 set key outside below
 set xlabel "Date (UTC)"
 set xdata time

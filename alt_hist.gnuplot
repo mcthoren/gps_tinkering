@@ -1,4 +1,5 @@
 set y2tics
+set mytics
 set key outside below
 set grid
 set ylabel "Frequency (count)"
