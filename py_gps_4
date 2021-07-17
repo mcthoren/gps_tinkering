@@ -1,0 +1,47 @@
+#!/usr/bin/python3
+
+import time, board, busio, adafruit_gps
+i2c = board.I2C()
+gps = adafruit_gps.GPS_GtopI2C(i2c)
+
+gps.send_command(b'PMTK314,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0')
+gps.send_command(b'PMTK220,1000')
+
+time1 = time0 = time.monotonic()
+while True:
+	# gps.update()
+	# data = gps.read(32)
+
+	time1 = time.monotonic()
+	if gps.update(): 
+		to = gps.timestamp_utc
+		if to and ((time1 - time0) > 1):
+			time0 = time.monotonic()
+			TS = "{}-{:02}-{:02}T{:02}:{:02}:{:02}Z".format(
+				to.tm_year, to.tm_mon, to.tm_mday,
+				to.tm_hour, to.tm_min, to.tm_sec)
+			print(TS, end = "\t")
+			# print(gps.timestamp_utc)
+			# print(gps.sats, "sats")
+			# print(gps.sat_prns, "sat prns")
+			# print(gps.pdop, "pdop")
+			# print(gps.horizontal_dilution, "hd")
+			# print(gps.fix_quality, "quality", end = "\t")
+	
+			alt = gps.altitude_m
+			if alt is not None:
+				print(gps.altitude_m, "m", end = "\t")
+
+			vdop = gps.vdop
+			if vdop is not None:
+				print("{:.2f} vdop".format(vdop), end = "\t")
+
+			geo_h = gps.height_geoid
+			if geo_h is not None:
+				print("{} m geoid height".format(gps.height_geoid), end = "\t")
+
+			sats = gps.satellites
+			if sats is not None:
+				print(sats, "sats")
+
+	time.sleep(0.02)
