@@ -32,8 +32,12 @@ while True:
 				print(gps.altitude_m, "m", end = "\t")
 
 			vdop = gps.vdop
-			if vdop is not None:
+			hdop = gps.hdop
+			pdop = gps.pdop
+			if (vdop or hdop or pdop) is not None:
 				print("{:.2f} vdop".format(vdop), end = "\t")
+				print("{:.2f} hdop".format(hdop), end = "\t")
+				print("{:.2f} pdop".format(pdop), end = "\t")
 
 			# this has so far always returned 47.9 m
 			# geo_h = gps.height_geoid
