@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-# thanks again to Adafruit and all their wonderful boards, libs and docs.
+# thanks again to Adafruit for all their wonderful boards, libs and docs.
 #
 # docs:
 # https://learn.adafruit.com/adafruit-mini-gps-pa1010d-module?view=all
@@ -8,7 +8,7 @@
 # datasheet:
 # https://cdn-learn.adafruit.com/assets/assets/000/084/295/original/CD_PA1010D_Datasheet_v.03.pdf
 
-import time, board, busio, adafruit_gps, datetime, sys
+import time, board, busio, adafruit_gps, datetime, sys, argparse
 
 sys.path.append('/import/home/ghz/repos/wxlib')
 import wxlib as wx
@@ -23,9 +23,13 @@ gps.send_command(b'PMTK314,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0')
 gps.send_command(b'PMTK220,1000')
 
 dat_fname = 'alt.dat'
-
 time1 = time0 = time.monotonic()
 alt_c = sat_c = vdop_c = hdop_c = pdop_c = cnt = 0
+
+parser = argparse.ArgumentParser(description=u'Collect and average elevation data from a gps reciever, and then upload it somewhere.')
+parser.add_argument('--debug', dest = 'debug', action = 'store_true', help = u'print intermittent data collection steps to console.')
+args = parser.parse_args()
+
 while True:
 	time1 = time.monotonic()
 	if gps.update(): 
@@ -35,27 +39,30 @@ while True:
 			TS = "{}-{:02}-{:02}T{:02}:{:02}:{:02}Z".format(
 				to.tm_year, to.tm_mon, to.tm_mday,
 				to.tm_hour, to.tm_min, to.tm_sec)
-			print(TS, end = "\t")
+
+			if args.debug:
+				print(TS, end = "\t")
 	
 			alt = gps.altitude_m
-			if alt is not None:
-				print(gps.altitude_m, "m", end = "\t")
+			if alt is not None and args.debug:
+				print(alt, "m", end = "\t")
 
 			vdop = gps.vdop
 			hdop = gps.hdop
 			pdop = gps.pdop
-			if (vdop and hdop and pdop) is not None:
+			if (vdop and hdop and pdop) is not None and args.debug:
 				print("{:.2f} vdop".format(vdop), end = "\t")
 				print("{:.2f} hdop".format(hdop), end = "\t")
 				print("{:.2f} pdop".format(pdop), end = "\t")
 
 			# this has so far always returned 47.9 m
-			# geo_h = gps.height_geoid
-			# if geo_h is not None:
-			# 	print("{} m geoid height".format(gps.height_geoid), end = "\t")
+			if args.debug:
+				geo_h = gps.height_geoid
+				if geo_h is not None:
+					print("{} m geoid height".format(geo_h), end = "\t")
 
 			sats = gps.satellites
-			if sats is not None:
+			if sats is not None and args.debug:
 				print(sats, "sats")
 
 			if (alt and sats and vdop and hdop and pdop) is not None:
@@ -71,7 +78,8 @@ while True:
 						cts, alt_c / cnt, vdop_c / cnt,
 						hdop_c / cnt, pdop_c / cnt, sat_c / cnt)
 					wx.write_out_dat_stamp_iso(cts, dat_fname, dat_s, wx_dir)
-					print(dat_s)
+					if args.debug:
+						print(dat_s)
 					alt_c = sat_c = vdop_c = hdop_c = pdop_c = cnt = 0
 
-	time.sleep(0.02)
+	time.sleep(0.2)
