@@ -8,14 +8,24 @@
 # datasheet:
 # https://cdn-learn.adafruit.com/assets/assets/000/084/295/original/CD_PA1010D_Datasheet_v.03.pdf
 
-import time, board, busio, adafruit_gps
+import time, board, busio, adafruit_gps, datetime, sys
+
+sys.path.append('/import/home/ghz/repos/wxlib')
+import wxlib as wx
+
 i2c = board.I2C()
 gps = adafruit_gps.GPS_GtopI2C(i2c)
+
+# note this isn't /import/home, this is on the SD card
+wx_dir = "/home/ghz/alt"
 
 gps.send_command(b'PMTK314,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0')
 gps.send_command(b'PMTK220,1000')
 
+dat_fname = 'alt.dat'
+
 time1 = time0 = time.monotonic()
+alt_c = sat_c = vdop_c = hdop_c = pdop_c = cnt = 0
 while True:
 	time1 = time.monotonic()
 	if gps.update(): 
@@ -34,7 +44,7 @@ while True:
 			vdop = gps.vdop
 			hdop = gps.hdop
 			pdop = gps.pdop
-			if (vdop or hdop or pdop) is not None:
+			if (vdop and hdop and pdop) is not None:
 				print("{:.2f} vdop".format(vdop), end = "\t")
 				print("{:.2f} hdop".format(hdop), end = "\t")
 				print("{:.2f} pdop".format(pdop), end = "\t")
@@ -47,5 +57,21 @@ while True:
 			sats = gps.satellites
 			if sats is not None:
 				print(sats, "sats")
+
+			if (alt and sats and vdop and hdop and pdop) is not None:
+				alt_c += alt
+				sat_c += sats
+				vdop_c += vdop
+				hdop_c += hdop
+				pdop_c += pdop
+				cnt += 1
+				if cnt >= 60:
+					cts = datetime.datetime.fromtimestamp(time.time()).strftime("%FT%TZ")
+					dat_s = "{}\t{:.2f} m\t{:.2f} vdop\t{:.2f} hdop \t{:.2f} pdop\t{:.2f} sats\n".format(
+						cts, alt_c / cnt, vdop_c / cnt,
+						hdop_c / cnt, pdop_c / cnt, sat_c / cnt)
+					wx.write_out_dat_stamp_iso(cts, dat_fname, dat_s, wx_dir)
+					print(dat_s)
+					alt_c = sat_c = vdop_c = hdop_c = pdop_c = cnt = 0
 
 	time.sleep(0.02)
