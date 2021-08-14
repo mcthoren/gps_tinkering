@@ -32,7 +32,19 @@ args = parser.parse_args()
 
 while True:
 	time1 = time.monotonic()
-	if gps.update(): 
+	try:
+		# apparently gps.update() can fail on us, from sth going on 4 lib functions down.
+		gps_up_stat = gps.update()
+	except KeyboardInterrupt:
+		# this is not very likely, but whatever.
+		print("keyboard interrupt. bailing.")
+		exit()
+	except:
+		# warn. bail.
+		print("gps.update() error. prly from deep in the bowels of a lib somewere.")
+		continue # we haven't done anything yet, so just try again, time1 will take care of itself.
+
+	if gps_up_stat:
 		to = gps.timestamp_utc
 		if gps.has_fix and to and to.tm_year and ((time1 - time0) > 1):
 			time0 = time.monotonic()
