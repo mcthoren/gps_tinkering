@@ -14,9 +14,10 @@ touch "${LOCK}"
 
 GPS_DIR='/import/home/ghz/repos/gps'
 WT_DIR='/import/home/ghz/repos/weather_tools'
-DAT_DIR='/home/ghz/alt/data/'
+DAT_DIR='/home/ghz/alt/data'
 
 "${WT_DIR}/grab_48h" "${DAT_DIR}" alt.dat
+cat ${DAT_DIR}/*/alt.dat.* | ${GPS_DIR}/alt_hist_gen > "${DAT_DIR}/gps.alt.historgram"
 
 cd /home/ghz/alt/plots || exit 1
 gnuplot "${GPS_DIR}/crater.gps.gnuplot"
