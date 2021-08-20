@@ -5,16 +5,29 @@ use warnings;
 use utf8;
 use open qw(:std :utf8);
 use Encode qw(encode decode);
+use Net::Domain qw(hostname);
 
 @ARGV = map { decode("UTF-8", $_) } @ARGV;
 
 my %el_hash;
 my $elev;
 
-while (<>) {
-	chomp;
-	my ($x, $y, $a, $alt, $b) = split;
-	$el_hash{$alt}++ if ($alt > 300 && $alt < 700);
+my $hostname = hostname();
+
+if ( "$hostname" eq "doomy" ) {
+	while (<>) {
+		chomp;
+		my ($x, $y, $a, $alt, $b) = split;
+		$el_hash{$alt}++ if ($alt > 300 && $alt < 700);
+	}
+}
+
+if ( "$hostname" eq "crater" ) {
+	while (<>) {
+		chomp;
+		my ($x, $alt, $y) = split;
+		$el_hash{$alt}++ if ($alt > 300 && $alt < 700);
+	}
 }
 
 foreach $elev (sort keys %el_hash) {
