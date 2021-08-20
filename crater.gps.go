@@ -32,7 +32,7 @@ sync
 
 /usr/bin/rsync -ur --timeout=50 /home/ghz/alt/ "${GPS_DIR}/crater.gps.gnuplot" \
 	"${GPS_DIR}/crater.gps.go" "${GPS_DIR}/alt_hist_gen" "${GPS_DIR}/py_gps_4" "${GPS_DIR}/README" \
-	"${GPS_DIR}/alt_hist.gnuplot" "${GPS_DIR}/LICENSE" \
+	"${GPS_DIR}/alt_hist.gnuplot" "${GPS_DIR}/crater.html" "${GPS_DIR}/LICENSE" \
 	wx9_sync:/wx9/ # 2> /dev/null
 
 rm "${LOCK}"
