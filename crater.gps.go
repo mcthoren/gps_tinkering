@@ -20,6 +20,7 @@ DAT_DIR='/home/ghz/alt/data'
 
 # this could be done once a day
 cat ${DAT_DIR}/*/alt.dat.* | ${GPS_DIR}/alt_hist_gen > "${DAT_DIR}/gps.alt.historgram"
+gnuplot -e "ALT_HIST='$DAT_DIR/gps.alt.historgram'; OUT_DIR='/home/ghz/alt/plots'" "$GPS_DIR/alt_hist.gnuplot"
 
 cd /home/ghz/alt/plots || exit 1
 gnuplot "${GPS_DIR}/crater.gps.gnuplot"

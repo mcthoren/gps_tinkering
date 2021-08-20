@@ -25,6 +25,6 @@ TS="$(date -u "+%F %T%Z")"
 sed "s/AAAAA/${REC}/; s/MMMMM/${MEAN}/; s/DDDDD/${MED}/; s/TTTTT/${TS}/" "$GPSP/gps_el.html.plate" > "$GPSP/gps_el.html"
 
 $GPSP/alt_hist_gen "$GPS_ALT_TEMP_1" > "$GPS_ALT_TEMP_HIST"
-gnuplot -e "ALT_HIST='$GPS_ALT_TEMP_HIST';" "$GPSP/alt_hist.gnuplot"
+gnuplot -e "ALT_HIST='$GPS_ALT_TEMP_HIST'; OUT_DIR='$GPSP/plots';" "$GPSP/alt_hist.gnuplot"
 
 rm "${GPS_ALT_TEMP_1}" "${GPS_ALT_TEMP_HIST}"
