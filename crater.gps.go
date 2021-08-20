@@ -12,13 +12,14 @@ LOCK="/home/ghz/alt/gps.lock"
 # lock is also checked for and deleted on boot, in case of a crash
 touch "${LOCK}"
 
-WT_DIR='/import/home/ghz/repos/weather_tools/'
+GPS_DIR='/import/home/ghz/repos/gps'
+WT_DIR='/import/home/ghz/repos/weather_tools'
 DAT_DIR='/home/ghz/alt/data/'
 
 "${WT_DIR}/grab_48h" "${DAT_DIR}" alt.dat
 
 cd /home/ghz/alt/plots || exit 1
-# gnuplot "$WT_DIR/keen.wx.gnuplot"
+gnuplot "${GPS_DIR}/crater.gps.gnuplot"
 
 sync
 
