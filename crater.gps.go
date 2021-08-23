@@ -34,7 +34,7 @@ gnuplot "${GPS_DIR}/crater.gps.gnuplot"
 	MED="$(grep 'Median:' $GPS_STS | awk '{printf("%.2f\n",$2)}')"
 	TS="$(date -u "+%F %T%Z")"
 
-	sed "s/AAAAA/${REC}/; s/MMMMM/${MEAN}/; s/DDDDD/${MED}/; s/TTTTT/${TS}/" "$GPSP/crater.html.plate" > "$GPSP/crater.html"
+	sed "s/AAAAA/${REC}/; s/MMMMM/${MEAN}/; s/DDDDD/${MED}/; s/TTTTT/${TS}/" "${GPS_DIR}/crater.html.plate" > "${GPS_DIR}/crater.html"
 
 	rm "${DAY_FLAG}" "${GPS_ALT_TMP}"
 }
