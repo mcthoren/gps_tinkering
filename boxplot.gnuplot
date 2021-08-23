@@ -1,4 +1,4 @@
-stats BOXF u 4
+stats BOXF u COL
 set term png size 800, 2000 font ",10"
 
 set style fill solid 0.5 border -1
@@ -20,4 +20,4 @@ set xtics ("Elevation (m)" 1.0)
 
 set title "Boxplot over all GPS Elevation Measurements"
 set output OUT_DIR.'/total_avg_el_m.png'
-plot BOXF using (1):4 t 'Total Average Elevation Measurements (meters)'
+plot BOXF using (1):COL t 'Total Average Elevation Measurements (meters)'

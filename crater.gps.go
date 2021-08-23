@@ -27,7 +27,7 @@ gnuplot "${GPS_DIR}/crater.gps.gnuplot"
 	GPS_ALT_TMP="$(mktemp /tmp/gps_alt.XXXXXXXXXXXXX)"
 	cat ${DAT_DIR}/*/alt.dat.* | tee "${GPS_ALT_TMP}" | ${GPS_DIR}/alt_hist_gen > "${DAT_DIR}/gps.alt.historgram"
 	gnuplot -e "ALT_HIST='$DAT_DIR/gps.alt.historgram'; OUT_DIR='/home/ghz/alt/plots'" "$GPS_DIR/alt_hist.gnuplot"
-	gnuplot -e "BOXF='$GPS_ALT_TMP'; OUT_DIR='/home/ghz/alt/plots'" "$GPS_DIR/boxplot.gnuplot" 2> "${GPS_STS}"
+	gnuplot -e "BOXF='$GPS_ALT_TMP'; OUT_DIR='/home/ghz/alt/plots'; COL=2;" "$GPS_DIR/boxplot.gnuplot" 2> "${GPS_STS}"
 	rm "${DAY_FLAG}" "${GPS_ALT_TMP}"
 }
 
