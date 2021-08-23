@@ -23,6 +23,8 @@ set y2label "Altitude (m)"
 set output out_d.'alt_m.png'
 plot dat_f using 1:2 title 'Altitude' with lines lw 2 linecolor rgb "#0000ff"
 
+set format y "%.1f"
+set format y2 "%.1f"
 set ylabel "Dilution of Prescission"
 set y2label "Dilution of Prescission"
 set output out_d.'dops.png'
