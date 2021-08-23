@@ -15,7 +15,7 @@ gnuplot -e "ALTF='$GPS_ALT_TEMP_0';ALTF_MA='$GPS_MA'" "$GPSP/gps.gnuplot"
 rm "${GPS_ALT_TEMP_0}"
 
 cat $GPSP/data/*/gps_alt.dat.* | grep -aP "$PAT0" > "$GPS_ALT_TEMP_1"
-gnuplot -e "BOXF='$GPS_ALT_TEMP_1'" "$GPSP/boxplot.gnuplot" 2> "$GPS_STS"
+gnuplot -e "BOXF='$GPS_ALT_TEMP_1'; OUT_DIR='$GPSP/plots';" "$GPSP/boxplot.gnuplot" 2> "$GPS_STS"
 
 REC="$(grep 'Records:' $GPS_STS | awk '{print $2}')"
 MEAN="$(grep 'Mean:' $GPS_STS | awk '{printf("%.2f\n",$2)}')"

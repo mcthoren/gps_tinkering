@@ -19,5 +19,5 @@ set y2label "Elevation (meters)"
 set xtics ("Elevation (m)" 1.0)
 
 set title "Boxplot over all GPS Elevation Measurements"
-set output '/import/home/ghz/projects/gps/plots/total_avg_el_m.png'
+set output OUT_DIR.'/total_avg_el_m.png'
 plot BOXF using (1):4 t 'Total Average Elevation Measurements (meters)'
