@@ -12,6 +12,13 @@
 <center>
 <br><h2>Elevation Readings from a PA1010D GPS Receiver in Augsburg, Germany</h2>
 <br>
+<table borders>
+<tr><td>Number of Data Points: </td> <td>AAAAA</td></tr>
+<tr><td>Mean Elevation: </td> <td>MMMMM m</td></tr>
+<tr><td>Median Elevation: </td> <td>DDDDD m</td></tr>
+<tr><td>Stats Generated:</td>  <td>TTTTT</td></tr>
+</table>
+<br>
 See <a href="https://github.com/mcthoren/gps_tinkering">here</a> for more info.<br>
 <br> Current Conditions (updates every ~60s):
 <br>
@@ -23,6 +30,7 @@ See <a href="https://github.com/mcthoren/gps_tinkering">here</a> for more info.<
 <img src="plots/el_hist.450-600.png"><br><br>
 <img src="plots/el_hist.500-550.png"><br><br>
 <img src="plots/el_hist.510-530.png"><br><br>
+<img src="plots/total_avg_el_m.png"><br><br>
 </center>
 <br> <br>
 </body> </html>

@@ -28,6 +28,14 @@ gnuplot "${GPS_DIR}/crater.gps.gnuplot"
 	cat ${DAT_DIR}/*/alt.dat.* | tee "${GPS_ALT_TMP}" | ${GPS_DIR}/alt_hist_gen > "${DAT_DIR}/gps.alt.historgram"
 	gnuplot -e "ALT_HIST='$DAT_DIR/gps.alt.historgram'; OUT_DIR='/home/ghz/alt/plots'" "$GPS_DIR/alt_hist.gnuplot"
 	gnuplot -e "BOXF='$GPS_ALT_TMP'; OUT_DIR='/home/ghz/alt/plots'; COL=2;" "$GPS_DIR/boxplot.gnuplot" 2> "${GPS_STS}"
+
+	REC="$(grep 'Records:' $GPS_STS | awk '{print $2}')"
+	MEAN="$(grep 'Mean:' $GPS_STS | awk '{printf("%.2f\n",$2)}')"
+	MED="$(grep 'Median:' $GPS_STS | awk '{printf("%.2f\n",$2)}')"
+	TS="$(date -u "+%F %T%Z")"
+
+	sed "s/AAAAA/${REC}/; s/MMMMM/${MEAN}/; s/DDDDD/${MED}/; s/TTTTT/${TS}/" "$GPSP/crater.html.plate" > "$GPSP/crater.html"
+
 	rm "${DAY_FLAG}" "${GPS_ALT_TMP}"
 }
 
