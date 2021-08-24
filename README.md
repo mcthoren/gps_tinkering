@@ -1,6 +1,6 @@
 #### USB GPS receivers are becoming cheap enough to stick on a raspberry pi and screw with just for fun. So that's what this code is about.
 
-More specifically, for ham radio antenna reasons, I'm interested in a reasonably accurate measure of my elevation. So for a start I'm going to collect those statistics, plot the long term averages, and see if they tell me anything. v1 and v4 use different receivers, different libraries, different code, and different methods of collecting what should be the same data. The v1 RX is a GPS only RX, and the v4 RX receives GPS and GLONASS data. Both receivers are within ~20cm of each other vertically. In theory, after a million points or so, if the data is normal, we would expect to see means that are somewhat near each other.
+More specifically, for ham radio antenna reasons, I'm interested in a reasonably accurate measure of my elevation. So for a start I'm going to collect those statistics, plot the long term averages, and see if they tell me anything. Program versions v1 and v4 use different receivers, different libraries, different code, and different methods of collecting what should be the same data. The v1 receiver is a GPS only receiver, and the v4 receiver currently receives GPS and GLONASS data. Both receivers are within ~20cm of each other vertically. After a million points or so, if the data is normal we would expect to see mean elevations that are somewhat near each other.
 
 #### This code exists in two versions. Details of v1 follow:
 This code uses the gpsd tools, and python client libraries, and started from an example here:
@@ -40,7 +40,7 @@ At the moment, this code collects 1024 points of elevation data with a not terri
 02	00	*	*	*	/import/home/ghz/projects/gps/plot_month_avg
 ```
 
-#### Details of what is now about v4 follow here:
+#### Details of v4 follow here:
 
 This version is based around the GPS PA1010D Module and code from Adafruit. It does a lot less averaging than v1, runs at 10Hz, and only averages 60 samples of not terrible [PHV]OP data per output line. It is meant to be simpler, more portable, and easier to use.
 
