@@ -41,6 +41,30 @@ a description of the fields returned by gpsd can be found here:
 
 #### Details of what is now about v4 follow here:
 
+This version is based around the GPS PA1010D Module and code from Adafruit.
+
+To install the prerequisites one needs sth like the following:
+* apt install python3-pip
+* pip3 install adafruit-circuitpython-gps
+
+##### Many thanks to Adafruit for all the wonderful docs, boards, and examples.
+* Docs can be found here:
+  * https://learn.adafruit.com/adafruit-mini-gps-pa1010d-module?view=all
+  * https://cdn-learn.adafruit.com/assets/assets/000/084/295/original/CD_PA1010D_Datasheet_v.03.pdf?1573833002
+
+this code can be found in the following places:
+	https://github.com/mcthoren/gps_tinkering	<--code
+	https://wx9.slackology.net/crater.html		<--page
+	https://wx9.slackology.net/			<--code, page, plots, data
+
+```shell
+# i've added the following entries to my crontab to further lazify my life:
+DAY_FLAG=/home/ghz/alt/DAY_FLAG
+#
+#minute hour    mday    month   wday    command
+*       *       *       *       *       /import/home/ghz/repos/gps/crater.gps.go
+00      00      *       *       *       touch "${DAY_FLAG}"
+```
 ##### v4 files:
 * alt_hist_gen		<--perl script for generating histograms of alt data for both v1 and v4
 * alt_hist.gnuplot	<--gnuplot file for graphing histograms of alt data for both v1 and v4
