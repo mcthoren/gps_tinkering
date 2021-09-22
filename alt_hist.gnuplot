@@ -27,3 +27,8 @@ set xrange ["510":"530"]
 set title "Elevation Frequency Histogram for All Measurements ≥ 510m < 530m"
 set output OUT_DIR.'/el_hist.510-530.png'
 plot ALT_HIST using 1:3 t 'Elevation (meters)' with boxes linecolor rgb "#ff0000"
+
+set xrange ["490":"510"]
+set title "Elevation Frequency Histogram for All Measurements ≥ 490m < 510m"
+set output OUT_DIR.'/el_hist.490-510.png'
+plot ALT_HIST using 1:3 t 'Elevation (meters)' with boxes linecolor rgb "#ff0000"

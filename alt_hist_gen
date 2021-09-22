@@ -26,7 +26,7 @@ if ( "$hostname" eq "crater" ) {
 	while (<>) {
 		chomp;
 		my ($x, $alt, $y) = split;
-		$el_hash{$alt}++ if ($alt > 300 && $alt < 700);
+		$el_hash{sprintf("%.1f", $alt)}++ if ($alt > 300 && $alt < 700);
 	}
 }
 
