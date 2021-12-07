@@ -40,8 +40,9 @@ while True:
 		print("keyboard interrupt. bailing.")
 		exit()
 	except:
-		# warn. bail.
+		# warn. wait. bail.
 		print("gps.update() error. prly from deep in the bowels of a lib somewere.")
+		time.sleep(1.0) # wait a tic, mostly so we don't spam the console with infinite error messages when the data cable gets cut.
 		continue # we haven't done anything yet, so just try again, time1 will take care of itself.
 
 	if gps_up_stat:
