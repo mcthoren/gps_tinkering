@@ -76,7 +76,7 @@ while True:
 
 	time1 = time.time()
 	if ((time1 - time0) > 60 and len(alt_lst) >= 1024):
-		ts =  datetime.datetime.fromtimestamp(time1).strftime("%Y%m%d%H%M%S")
+		ts = time.strftime("%Y%m%d%H%M%S", time.gmtime(float(time1)))
 		lst_len = len(alt_lst)
 		if (lst_len > 0):
 			avg_alt = sum(a[0] for a in alt_lst) / lst_len
