@@ -80,7 +80,7 @@ while True:
 
 			if (alt and sats and vdop and hdop and pdop) is not None:
 				# experience (graphs) hath shewn that our worst data comes below these conditions. lose them.
-				if (sats > 9.00 and pdop < 2.00 and hdop < 1.70 and vdop < 1.00):
+				if (sats > 9.00 and pdop < 1.70 and hdop < 1.30 and vdop < 1.00):
 					alt_c += alt
 					sat_c += sats
 					vdop_c += vdop
