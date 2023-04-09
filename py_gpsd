@@ -1,11 +1,9 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # this code indented with actual 0x09 tabs
 
 from gps import *
 import sys, time, datetime, fileinput, os
-import numpy as np
-import matplotlib.dates as mdates
 
 base_dir = "/import/home/ghz"
 
@@ -22,33 +20,6 @@ gps_inst = gps(mode=WATCH_ENABLE|WATCH_NEWSTYLE)
 
 vdop = alt = sat_count = epv = gtime = gmode = avg_alt = avg_evp = 0
 alt_lst = []
-
-def plot(ts, n_plate):
-	npoints = 2200 # ~48h
-
-	dat_f = ["0000", "0000", "0000", "0000"]
-
-	td = datetime.datetime.strptime(ts, "%Y%m%d%H%M%S")
-
-	for i in range (0, 4):
-		d_date = (td - datetime.timedelta(i)).strftime("%Y%m%d")
-		d_year = (td - datetime.timedelta(i)).strftime("%Y")
-		dat_f[3 - i] = wx_dir+'/data/'+d_year+'/'+n_plate+'.'+d_date
-		wx.proof_dat_f(dat_f[3 - i])
-
-	dat = fileinput.input(dat_f)
-	date, alt_averages, evp_averages = np.loadtxt(dat, usecols=(0, 3, 7), unpack=True, encoding = u'utf8', converters={ 0: mdates.strpdate2num('%Y%m%d%H%M%S')})
-
-	if date.size < 4:
-		return 0; # not enough points yet. wait for more
-
-	if date.size < npoints:
-		npoints = date.size - 1
-
-	f_pts  = date.size - npoints
-	t_pts  = date.size
-
-	wx.graph(date[f_pts : t_pts], alt_averages[f_pts : t_pts], u"b-", u"Running Average Elevation", u"Elevation (meters)", plot_d+'avg_alt.png')
 
 debug = 0
 time0 = time1 = time.time()
@@ -83,9 +54,6 @@ while True:
 			avg_evp = sum(a[1] for a in alt_lst) / lst_len
 		dat_string = u"%s\tavg alt: %.1f m\tavg evp: %.1f m\n" % (ts, avg_alt, avg_evp)
 		wx.write_out_dat_stamp(ts, dat_fname, dat_string, wx_dir)
-		plot(ts, dat_fname)
-		# wx6_sync defined in ~/.ssh/config with host, user, key, etc.
-		os.system('/usr/bin/rsync --timeout=60 -ur ' + wx_dir + '/* wx6_sync:/wx6/')
 		time0 = time1 = time.time()
 
 	if (len(alt_lst) > 1024):
