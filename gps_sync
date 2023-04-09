@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# the plan is, this script is called with a cron job sth like so:
+#minute	hour	mday	month	wday	command
+# *	*	*	*	*	~/gps/gps_sync
+
+LOCK="/tmp/gps.lock"
+
+[ -e "${LOCK}" ] && {
+	echo "$0: lock exists" | logger
+	exit 1
+}
+
+touch "${LOCK}"
+
+HOST_N="$(hostname -s)"
+"${HOME}/repos/weather_tools/grab_48h" "${HOME}/repos/gps/data" gps_alt.dat
+gnuplot "${HOME}/repos/gps/doomy.gps.gnuplot"
+sync
+
+[[ "${HOST_N}" == "doomy" ]] && {
+	/usr/bin/rsync --timeout=60 -ur /import/home/ghz/projects/gps/* wx6_sync:/wx6/
+}
+
+rm "${LOCK}"
